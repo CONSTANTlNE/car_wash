@@ -1,0 +1,70 @@
+@import 'tailwindcss';
+
+/* ── Class-based dark mode (required for Tailwind v4) ── */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+    --color-brand-50:  #fff8f1;
+    --color-brand-100: #feecd8;
+    --color-brand-200: #fcd5a8;
+    --color-brand-300: #f9b472;
+    --color-brand-400: #f6893a;
+    --color-brand-500: #f36c18;
+    --color-brand-600: #d9520d;
+    --color-brand-700: #b53d0e;
+    --color-brand-800: #913213;
+    --color-brand-900: #762b13;
+
+    --color-surface-light: #faf7f4;
+    --color-card-light:    #ffffff;
+    --color-border-light:  #ede8e2;
+    --color-text-light:    #2c2218;
+    --color-muted-light:   #8c7b6e;
+
+    --color-surface-dark:  #1a1510;
+    --color-card-dark:     #241d16;
+    --color-border-dark:   #3a2f24;
+    --color-text-dark:     #f5ede4;
+    --color-muted-dark:    #9e8878;
+}
+
+/* ── Sidebar ── */
+#sidebar { transition: width 220ms ease, transform 220ms ease; }
+#sidebar.collapsed { width: 4rem !important; }
+#sidebar.collapsed .nav-label,
+#sidebar.collapsed .sidebar-logo-text,
+#sidebar.collapsed .sidebar-section-label { display: none; }
+#sidebar.collapsed .nav-icon { margin-inline: auto; }
+.nav-item.active .nav-icon { color: white; }
+.nav-item.active:hover .nav-icon { color: var(--color-text-light); }
+
+/* Mobile: hidden off-screen unless .mobile-open is added by JS */
+@media (max-width: 767px) {
+  #sidebar:not(.mobile-open) { transform: translateX(-100%); }
+}
+
+/* ── Dropdown ── */
+#user-dropdown { transform-origin: top right; }
+#user-dropdown.open {
+  display: block;
+  animation: dropIn 120ms ease forwards;
+}
+@keyframes dropIn {
+  from { opacity: 0; transform: scale(.95) translateY(-4px); }
+  to   { opacity: 1; transform: scale(1)  translateY(0); }
+}
+
+/* ── Smooth theme transition ── */
+*, *::before, *::after { transition: background-color 180ms ease, border-color 180ms ease, color 80ms ease; }
+
+/* ── Scrollbar styling ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-brand-300); border-radius: 99px; }
