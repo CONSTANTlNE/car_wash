@@ -22,8 +22,9 @@
 
     {{-- Nav --}}
     <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
-        <p class="sidebar-section-label px-2 mb-2 text-[10px] font-semibold uppercase tracking-widest text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]">
-            Main</p>
+{{--        <p class="sidebar-section-label px-2 mb-2 text-[10px] font-semibold uppercase tracking-widest text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]">--}}
+{{--            Main
+    </p>--}}
 
         @if(auth('web')->user()?->hasRole('manager') || auth('admin')->user()?->hasRole('admin'))
             @php $dashActive = request()->routeIs('queue_dashboard'); @endphp
@@ -39,7 +40,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round"
                           d="M3 12l9-9 9 9M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9"/>
                 </svg>
-                <span class="nav-label">Dashboard</span>
+                <span class="nav-label">მთავარი</span>
             </a>
 
 
@@ -57,7 +58,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round"
                           d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m9-4a4 4 0 11-8 0 4 4 0 018 0z"/>
                 </svg>
-                <span class="nav-label">Washers</span>
+                <span class="nav-label">მრეცხავები</span>
             </a>
 
             @php $historyActive = request()->routeIs('washes_history'); @endphp
@@ -73,7 +74,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round"
                           d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2M9 14l2 2 4-4"/>
                 </svg>
-                <span class="nav-label">Wash History</span>
+                <span class="nav-label">რეცხვის ისტორია</span>
             </a>
         @endif
 
@@ -86,7 +87,7 @@
                     'text-[var(--color-text-light)] dark:text-[var(--color-text-dark)] hover:bg-[var(--color-brand-50)] dark:hover:bg-[var(--color-brand-900)]/30' => !$washerActive,
                 ])>
                 <span class="p-1">₾</span>
-                <span class="nav-label">Payments</span>
+                <span class="nav-label">გადახდები</span>
             </a>
             @php $historyActive = request()->routeIs('payment.history'); @endphp
             <a href="{{ route('payment.history') }}"
@@ -101,7 +102,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round"
                           d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2M9 14l2 2 4-4"/>
                 </svg>
-                <span class="nav-label">Payment History</span>
+                <span class="nav-label">გადახდები ისტორია</span>
             </a>
 
 

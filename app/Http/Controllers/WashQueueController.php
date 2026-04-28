@@ -67,7 +67,7 @@ class WashQueueController extends Controller
     {
         $data = $request->validate([
             'wash_type'    => ['required', 'exists:wash_types,id'],
-            'car_type'     => ['required', 'in:sedan,suv,hatchback,minivan'],
+            'car_type'     => ['required', 'in:სედანი,ჯიპი,ჰეჩბექი,მინივენი'],
             'car_number'   => ['required', 'string', 'max:20'],
             'owner_mobile' => ['nullable', 'string', 'max:20'],
             'wash_box'     => ['required', 'exists:carwash_boxes,id'],

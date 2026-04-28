@@ -7,7 +7,7 @@
     {{-- Header --}}
     <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
         <h2 class="text-sm font-semibold uppercase tracking-widest text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]">
-            Washes History
+            რეცხვის ისტორია
         </h2>
 
         <form method="GET" action="{{ route('washes_history') }}" class="flex items-center gap-2">
@@ -38,7 +38,7 @@
     <div class="grid grid-cols-3 gap-4 mb-6">
         <div class="rounded-2xl border border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]
                     bg-[var(--color-card-light)] dark:bg-[var(--color-card-dark)] p-5">
-            <p class="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)] mb-1">Total Washes</p>
+            <p class="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)] mb-1">სულ მანქანა</p>
             <p id="stat-total" class="text-2xl font-bold text-[var(--color-text-light)] dark:text-[var(--color-text-dark)]"
                data-value="{{ $stats['total'] }}">
                 {{ $stats['total'] }}
@@ -46,7 +46,7 @@
         </div>
         <div class="rounded-2xl border border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]
                     bg-[var(--color-card-light)] dark:bg-[var(--color-card-dark)] p-5">
-            <p class="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)] mb-1">Total Revenue</p>
+            <p class="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)] mb-1">ჯამური შემოსავალი</p>
             <p id="stat-amount" class="text-2xl font-bold text-[var(--color-text-light)] dark:text-[var(--color-text-dark)]"
                data-value="{{ $stats['amount'] }}">
                 ₾{{ number_format($stats['amount'], 2) }}
@@ -54,7 +54,7 @@
         </div>
         <div class="rounded-2xl border border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]
                     bg-[var(--color-card-light)] dark:bg-[var(--color-card-dark)] p-5">
-            <p class="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)] mb-1">Total Commissions</p>
+            <p class="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)] mb-1">ჯამური საკომისიო</p>
             <p id="stat-commission" class="text-2xl font-bold text-[var(--color-brand-500)]"
                data-value="{{ $stats['commission'] }}">
                 ₾{{ number_format($stats['commission'], 2) }}
@@ -75,16 +75,16 @@
                                text-left text-[10px] uppercase tracking-widest
                                text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]">
                         <th class="px-5 py-3">#</th>
-                        <th class="px-5 py-3">Date</th>
-                        <th class="px-5 py-3">Car</th>
-                        <th class="px-5 py-3">Wash Type</th>
-                        <th class="px-5 py-3">Box</th>
-                        <th class="px-5 py-3">Washer</th>
-                        <th class="px-5 py-3">Amount</th>
-                        <th class="px-5 py-3">Commission</th>
-                        <th class="px-5 py-3">Status</th>
-                        <th class="px-5 py-3">Paid</th>
-                        <th class="px-5 py-3"></th>
+                        <th class="px-5 py-3">თარიღი</th>
+                        <th class="px-5 py-3">მანქანა</th>
+                        <th class="px-5 py-3">რეცხვის ტიპი</th>
+                        <th class="px-5 py-3">ბოქსი</th>
+                        <th class="px-5 py-3">მრეცხავი</th>
+                        <th class="px-5 py-3">თანხა</th>
+                        <th class="px-5 py-3">საკომისიო</th>
+                        <th class="px-5 py-3">სტატუსი</th>
+                        <th class="px-5 py-3">გადახდის სტატუსი</th>
+                        <th class="px-5 py-3">მოქმედება</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-[var(--color-border-light)] dark:divide-[var(--color-border-dark)]">
@@ -194,7 +194,7 @@
                     @empty
                         <tr>
                             <td colspan="11" class="px-5 py-10 text-center text-sm text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]">
-                                No washes in this date range.
+                              ჩანაწერი არ მოიძებნა.
                             </td>
                         </tr>
                     @endforelse

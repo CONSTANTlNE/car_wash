@@ -4,12 +4,11 @@
 
     <div class="flex flex-wrap items-center justify-center gap-4 mb-5">
         <h2 class="text-sm font-semibold uppercase tracking-widest text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]">
-            Cashier
+            სალარო
         </h2>
     </div>
 
     <section class="pb-6">
-
         <div class="rounded-2xl border border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]
                 bg-[var(--color-card-light)] dark:bg-[var(--color-card-dark)] overflow-hidden">
             <div class="overflow-x-auto">
@@ -20,13 +19,13 @@
                                text-left text-[10px] uppercase tracking-widest
                                text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]">
                         <th class="px-5 py-3">#</th>
-                        <th class="px-5 py-3">Car</th>
-                        <th class="px-5 py-3">Wash Type</th>
-                        <th class="px-5 py-3">Box</th>
-                        <th class="px-5 py-3">Washer</th>
-                        <th class="px-5 py-3">Amount</th>
-                        <th class="px-5 py-3">Paid</th>
-                        <th class="px-5 py-3">Action</th>
+                        <th class="px-5 py-3">მანქანა</th>
+                        <th class="px-5 py-3">რეცხვის ტიპი</th>
+                        <th class="px-5 py-3">ბოქსი</th>
+                        <th class="px-5 py-3">მრეცხავი</th>
+                        <th class="px-5 py-3">თანხა</th>
+                        <th class="px-5 py-3">გადახდის სტატუსი</th>
+                        <th class="px-5 py-3">მოქმედება</th>
                     </tr>
                     </thead>
                     <tbody class="divide-y divide-[var(--color-border-light)] dark:divide-[var(--color-border-dark)]">
@@ -75,7 +74,7 @@
                                                     bg-[var(--color-card-light)] dark:bg-[var(--color-card-dark)] shadow-xl p-6">
 
                                             <div class="flex items-center justify-between mb-5">
-                                                <h3 class="font-semibold text-[var(--color-text-light)] dark:text-[var(--color-text-dark)]">Collect Payment</h3>
+                                                <h3 class="font-semibold text-[var(--color-text-light)] dark:text-[var(--color-text-dark)]">გადახდის მიღება</h3>
                                                 <button type="button"
                                                         onclick="document.getElementById('pay-modal-{{ $queue->id }}').classList.add('hidden')"
                                                         class="flex items-center justify-center w-7 h-7 rounded-lg
@@ -89,19 +88,19 @@
 
                                             <div class="space-y-2 mb-5 rounded-xl bg-[var(--color-surface-light)] dark:bg-[var(--color-surface-dark)] p-4 text-sm">
                                                 <div class="flex justify-between">
-                                                    <span class="text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]">Car</span>
+                                                    <span class="text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]">მანქანა</span>
                                                     <span class="font-semibold text-[var(--color-text-light)] dark:text-[var(--color-text-dark)]">{{ $queue->car?->car_number }}</span>
                                                 </div>
                                                 <div class="flex justify-between">
-                                                    <span class="text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]">Wash Type</span>
+                                                    <span class="text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]">რეცხვის ტიპი</span>
                                                     <span class="text-[var(--color-text-light)] dark:text-[var(--color-text-dark)]">{{ $queue->wash_type }}</span>
                                                 </div>
                                                 <div class="flex justify-between">
-                                                    <span class="text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]">Washer</span>
+                                                    <span class="text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]">მრეცხავი</span>
                                                     <span class="text-[var(--color-text-light)] dark:text-[var(--color-text-dark)]">{{ $queue->washer?->name ?? '—' }}</span>
                                                 </div>
                                                 <div class="flex justify-between pt-2 mt-1 border-t border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]">
-                                                    <span class="font-semibold text-[var(--color-text-light)] dark:text-[var(--color-text-dark)]">Amount</span>
+                                                    <span class="font-semibold text-[var(--color-text-light)] dark:text-[var(--color-text-dark)]">თანხა</span>
                                                     <span class="font-bold text-lg text-emerald-600 dark:text-emerald-400">₾{{ number_format($queue->wash_price, 2) }}</span>
                                                 </div>
                                             </div>
@@ -110,7 +109,7 @@
                                                 @csrf
                                                 <div class="mb-4">
                                                     <label class="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)] mb-1.5">
-                                                        Payment Method
+                                                        გადახდის მეთოდი
                                                     </label>
                                                     <select name="payment_method" required
                                                             class="w-full rounded-xl px-4 py-2.5 text-sm
@@ -130,12 +129,12 @@
                                                                    border border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]
                                                                    text-[var(--color-text-light)] dark:text-[var(--color-text-dark)]
                                                                    hover:bg-[var(--color-border-light)] dark:hover:bg-[var(--color-border-dark)] transition-colors">
-                                                        Cancel
+                                                        გაუქმება
                                                     </button>
                                                     <button type="submit"
                                                             class="flex-1 px-4 py-2.5 rounded-xl text-sm font-semibold text-white
                                                                    bg-emerald-500 hover:bg-emerald-600 transition-colors">
-                                                        Confirm Payment
+                                                        შენახვა
                                                     </button>
                                                 </div>
                                             </form>
@@ -147,7 +146,7 @@
                     @empty
                         <tr>
                             <td colspan="8" class="px-5 py-10 text-center text-sm text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]">
-                                No cars in the queue today.
+                             ჩანაწერი არ მოიძებნა
                             </td>
                         </tr>
                     @endforelse

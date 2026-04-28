@@ -11,13 +11,13 @@
                     class="tab-btn px-4 py-1.5 rounded-lg text-sm font-medium transition-colors
                            bg-[var(--color-card-light)] dark:bg-[var(--color-card-dark)]
                            text-[var(--color-text-light)] dark:text-[var(--color-text-dark)] shadow-sm">
-                Today's Queue
+                დღევანდელი ჩანაწერები
             </button>
             <button data-tab="boxes"
                     class="tab-btn px-4 py-1.5 rounded-lg text-sm font-medium transition-colors
                            text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]
                            hover:text-[var(--color-text-light)] dark:hover:text-[var(--color-text-dark)]">
-                Wash Boxes
+                ბოქსები
             </button>
         </div>
 
@@ -27,7 +27,7 @@
             <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
             </svg>
-            Add Car
+           მანქანის დამატება
         </a>
     </div>
 
@@ -42,14 +42,14 @@
                                    text-left text-[10px] uppercase tracking-widest
                                    text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]">
                             <th class="px-5 py-3">#</th>
-                            <th class="px-5 py-3">Car</th>
-                            <th class="px-5 py-3">Wash Type</th>
-                            <th class="px-5 py-3">Box</th>
-                            <th class="px-5 py-3">Washer</th>
-                            <th class="px-5 py-3">Amount</th>
-                            <th class="px-5 py-3">Status</th>
-                            <th class="px-5 py-3">Paid</th>
-                            <th class="px-5 py-3">Action</th>
+                            <th class="px-5 py-3">მანქანა</th>
+                            <th class="px-5 py-3">რევხვის ტიპი</th>
+                            <th class="px-5 py-3">ბოქსი</th>
+                            <th class="px-5 py-3">მრეცხავი</th>
+                            <th class="px-5 py-3">თანხა</th>
+                            <th class="px-5 py-3">სტატუსი</th>
+                            <th class="px-5 py-3">გადახდის სტატუსი</th>
+                            <th class="px-5 py-3">მოქმედება</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-[var(--color-border-light)] dark:divide-[var(--color-border-dark)]">
@@ -152,7 +152,7 @@
                         @empty
                             <tr>
                                 <td colspan="8" class="px-5 py-10 text-center text-sm text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]">
-                                    No cars in the queue today.
+                                    დღეს არ არის ჩანაწერი.
                                 </td>
                             </tr>
                         @endforelse
@@ -228,7 +228,7 @@
                             </div>
                         </div>
                     @else
-                        <p class="text-xs text-emerald-600 dark:text-emerald-400 mt-4">Available</p>
+                        <p class="text-xs text-emerald-600 dark:text-emerald-400 mt-4">თავისუფალი</p>
                     @endif
                 </div>
             @endforeach
