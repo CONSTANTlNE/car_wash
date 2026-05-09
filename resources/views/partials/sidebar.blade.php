@@ -26,23 +26,8 @@
         {{--            Main
             </p>--}}
 
-        @if(auth('web')->user()?->hasRole('manager') || auth('web')->user()?->hasRole('admin'))
-            @php $dashActive = request()->routeIs('queue_dashboard'); @endphp
-            <a href="{{ route('queue_dashboard') }}"
-                @class([
-                    'nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors',
-                    'bg-[var(--color-brand-500)] text-white' => $dashActive,
-                    'text-[var(--color-text-light)] dark:text-[var(--color-text-dark)] hover:bg-[var(--color-brand-50)] dark:hover:bg-[var(--color-brand-900)]/30' => !$dashActive,
-                ])>
-                <svg
-                    @class(['nav-icon w-5 h-5 shrink-0', 'text-white' => $dashActive, 'text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]' => !$dashActive])
-                    fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                          d="M3 12l9-9 9 9M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9"/>
-                </svg>
-                <span class="nav-label">მთავარი</span>
-            </a>
 
+        @if(auth('web')->user()?->hasRole('admin') || auth('admin'))
             @php $historyActive = request()->routeIs('washes_history'); @endphp
             <a href="{{ route('washes_history') }}"
                 @class([
@@ -86,6 +71,58 @@
                 <span class="nav-label">სამრეცხაოები</span>
             </a>
 
+            @php $historyActive = request()->routeIs('payment.history'); @endphp
+            <a href="{{ route('payment.history') }}"
+                @class([
+                    'nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors',
+                    'bg-[var(--color-brand-500)] text-white' => $historyActive,
+                    'text-[var(--color-text-light)] dark:text-[var(--color-text-dark)] hover:bg-[var(--color-brand-50)] dark:hover:bg-[var(--color-brand-900)]/30' => !$historyActive,
+                ])>
+                <svg
+                    @class(['nav-icon w-5 h-5 shrink-0', 'text-white' => $historyActive, 'text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]' => !$historyActive])
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2M9 14l2 2 4-4"/>
+                </svg>
+                <span class="nav-label">გადახდები ისტორია</span>
+            </a>
+
+
+            @php $usersActive = request()->routeIs('users.*'); @endphp
+            <a href="{{ route('users.index') }}"
+                @class([
+                    'nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors',
+                    'bg-[var(--color-brand-500)] text-white' => $usersActive,
+                    'text-[var(--color-text-light)] dark:text-[var(--color-text-dark)] hover:bg-[var(--color-brand-50)] dark:hover:bg-[var(--color-brand-900)]/30' => !$usersActive,
+                ])>
+                <svg
+                    @class(['nav-icon w-5 h-5 shrink-0', 'text-white' => $usersActive, 'text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]' => !$usersActive])
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                </svg>
+                <span class="nav-label">მომხმარებლები</span>
+            </a>
+
+        @endif
+
+        @if(auth('web')->user()?->hasRole('manager') || auth('web')->user()?->hasRole('admin'))
+            @php $dashActive = request()->routeIs('queue_dashboard'); @endphp
+            <a href="{{ route('queue_dashboard') }}"
+                @class([
+                    'nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors',
+                    'bg-[var(--color-brand-500)] text-white' => $dashActive,
+                    'text-[var(--color-text-light)] dark:text-[var(--color-text-dark)] hover:bg-[var(--color-brand-50)] dark:hover:bg-[var(--color-brand-900)]/30' => !$dashActive,
+                ])>
+                <svg
+                    @class(['nav-icon w-5 h-5 shrink-0', 'text-white' => $dashActive, 'text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]' => !$dashActive])
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M3 12l9-9 9 9M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9"/>
+                </svg>
+                <span class="nav-label">მთავარი</span>
+            </a>
+
 
 
             @php $washerActive = request()->routeIs('washer_dashboard', 'washer.single'); @endphp
@@ -104,7 +141,6 @@
                 <span class="nav-label">მრეცხავები</span>
             </a>
 
-
         @endif
 
 
@@ -117,21 +153,6 @@
             ])>
             <span class="p-1">₾</span>
             <span class="nav-label">გადახდები</span>
-        </a>
-        @php $historyActive = request()->routeIs('payment.history'); @endphp
-        <a href="{{ route('payment.history') }}"
-            @class([
-                'nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors',
-                'bg-[var(--color-brand-500)] text-white' => $historyActive,
-                'text-[var(--color-text-light)] dark:text-[var(--color-text-dark)] hover:bg-[var(--color-brand-50)] dark:hover:bg-[var(--color-brand-900)]/30' => !$historyActive,
-            ])>
-            <svg
-                @class(['nav-icon w-5 h-5 shrink-0', 'text-white' => $historyActive, 'text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]' => !$historyActive])
-                fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2M9 14l2 2 4-4"/>
-            </svg>
-            <span class="nav-label">გადახდები ისტორია</span>
         </a>
 
 
@@ -151,21 +172,6 @@
             <span class="nav-label">პარკინგი</span>
         </a>
 
-        @php $usersActive = request()->routeIs('users.*'); @endphp
-        <a href="{{ route('users.index') }}"
-            @class([
-                'nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors',
-                'bg-[var(--color-brand-500)] text-white' => $usersActive,
-                'text-[var(--color-text-light)] dark:text-[var(--color-text-dark)] hover:bg-[var(--color-brand-50)] dark:hover:bg-[var(--color-brand-900)]/30' => !$usersActive,
-            ])>
-            <svg
-                @class(['nav-icon w-5 h-5 shrink-0', 'text-white' => $usersActive, 'text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]' => !$usersActive])
-                fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
-            </svg>
-            <span class="nav-label">მომხმარებლები</span>
-        </a>
 
         @php $contractorsActive = request()->routeIs('contractors.*'); @endphp
         <a href="{{ route('contractors.index') }}"

@@ -18,11 +18,25 @@ class TenantSeeder extends Seeder
             ]
         );
 
+
+
         $manager->assignRole('manager');
+
+        $admin = User::create(
+            [
+                'name' => 'admin',
+                'email' => 'admin@admin.com',
+                'password' => bcrypt('password'),
+            ]
+        );
 
         $tenant = Tenant::create(['company_name' => 'test tenant', 'mobile' => '01711111111', 'address' => 'test address', 'user_id' => $manager->id, 'main_user_id' => $manager->id]);
         $manager->tenant_id = 1;
         $manager->save();
+
+        $admin->tenant_id = 1;
+        $admin->assignRole('admin');
+        $admin->save();
 
         $cashier = User::create(
             [

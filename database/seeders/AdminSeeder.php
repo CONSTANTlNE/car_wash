@@ -11,10 +11,7 @@ class AdminSeeder extends Seeder
 
     public function run(): void
     {
-        $role = Role::firstOrCreate([
-            'name'       => 'admin',
-            'guard_name' => 'admin',
-        ]);
+
 
 
         $admin = Admin::create([
@@ -23,6 +20,5 @@ class AdminSeeder extends Seeder
             'password' => bcrypt('password'),
         ]);
 
-        $admin->assignRole($role);
     }
 }

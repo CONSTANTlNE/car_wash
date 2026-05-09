@@ -13,7 +13,7 @@
                 bg-[var(--color-card-light)] dark:bg-[var(--color-card-dark)] p-6">
             <form class="space-y-6" action="{{route('queue_store')}}" method="post" enctype="multipart/form-data">
                 @csrf
-                <div class="flex justify-center gap-4">
+                <div class="flex justify-center flex-wrap gap-4">
                     <div>
                         <label
                             class="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)] mb-1.5">
@@ -169,11 +169,8 @@
 
                 {{-- Photo --}}
                 <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)] mb-1.5">
-                        ფოტო
-                    </label>
-                    <input id="car-photo-input" type="file" name="car_photo" accept="image/*" capture="environment" class="hidden">
-                    <div class="flex items-center gap-3">
+                    <input id="car-photo-input" type="file" name="car_photo" accept="image/*" capture="environment" required class="hidden">
+                    <div class="flex items-center justify-center gap-3">
                         <button type="button" id="take-photo-btn"
                                 onclick="document.getElementById('car-photo-input').click()"
                                 class="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium

@@ -89,7 +89,7 @@ class WashQueueController extends Controller
             'washer' => ['required', 'exists:users,id'],
             'comment' => ['nullable', 'string', 'max:500'],
             'contractor_id' => ['nullable', 'exists:contractors,id'],
-            'car_photo' => ['nullable', 'image', 'max:10240'],
+            'car_photo' => ['required', 'image', 'max:10240'],
         ]);
 
         $carType = CarType::find($data['car_type']);
