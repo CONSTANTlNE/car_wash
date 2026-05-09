@@ -244,6 +244,7 @@
                                         </svg>
                                     </button>
 
+                                    @if( (auth('web')->check() && auth('web')->user()->hasRole('admin')) || auth('admin')->check() )
                                     <button type="button"
                                             onclick="event.preventDefault(); event.stopPropagation(); openEditBoxModal({{ $box->id }}, '{{ addslashes($box->box_number) }}')"
                                             title="ბოქსის რედაქტირება"
@@ -274,6 +275,7 @@
                                             </svg>
                                         </button>
                                     </form>
+                                    @endif
                                 </div>
                             </div>
                         </div>

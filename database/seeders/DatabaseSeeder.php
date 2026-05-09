@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
             TenantSeeder::class,
             AdminSeeder::class,
             BoxSeeder::class,
-            WashTypeSeeder::class,
             ContractorSeeder::class,
+            WashPriceSeeder::class,
         ]);
     }
 }
