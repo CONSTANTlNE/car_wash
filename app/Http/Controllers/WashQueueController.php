@@ -89,6 +89,7 @@ class WashQueueController extends Controller
             'washer' => ['required', 'exists:users,id'],
             'comment' => ['nullable', 'string', 'max:500'],
             'contractor_id' => ['nullable', 'exists:contractors,id'],
+            'car_photo' => ['nullable', 'image', 'max:10240'],
         ]);
 
         $carType = CarType::find($data['car_type']);
@@ -117,6 +118,10 @@ class WashQueueController extends Controller
             'contractor_id' => $data['contractor_id'] ?? null,
             'washer_commission' => $data['amount'] * ($washer->commission / 100),
         ]);
+
+        if ($request->hasFile('car_photo')) {
+            $queue->addMediaFromRequest('car_photo')->toMediaCollection('car_photos');
+        }
 
         WashQueueCreated::dispatch($queue);
 
@@ -147,6 +152,7 @@ class WashQueueController extends Controller
             'washer' => ['required', 'exists:users,id'],
             'status' => ['required', 'in:pending,in_progress,done,cancelled'],
             'comment' => ['nullable', 'string', 'max:500'],
+            'car_photo' => ['nullable', 'image', 'max:10240'],
         ]);
 
         $carType = CarType::find($data['car_type']);
@@ -178,6 +184,11 @@ class WashQueueController extends Controller
             'comment' => $data['comment'] ?? null,
             'washer_commission' => $data['amount'] * ($washer->commission / 100),
         ]);
+
+        if ($request->hasFile('car_photo')) {
+            $queue->clearMediaCollection('car_photos');
+            $queue->addMediaFromRequest('car_photo')->toMediaCollection('car_photos');
+        }
 
         return redirect()->route('queue_dashboard');
     }
