@@ -34,6 +34,7 @@
         {{-- ── SCROLLABLE CONTENT ── --}}
         <main class="flex-1 overflow-y-auto px-4 md:px-6 py-6 space-y-8">
 
+            @yield('products')
             @yield('contractors')
             @yield('parkings')
             @yield('boxes_dashboard')
@@ -99,6 +100,8 @@
 <script>
     window.addEventListener('load', function () {
         if (!window.Echo) return;
+        const methodLabels = { cash: 'Cash', BOG_TERMINAL: 'BOG Terminal', TBC_TERMINAL: 'TBC Terminal' };
+
         window.Echo.channel('wash-queues')
             .listen('WashQueueCreated', function (e) {
                 window.dispatchEvent(new CustomEvent('wash-queue-created', { detail: e }));
@@ -106,11 +109,24 @@
             .listen('WashQueuePaid', function (e) {
                 window.dispatchEvent(new CustomEvent('wash-queue-paid', { detail: e }));
 
-                const methodLabels = { cash: 'Cash', BOG_TERMINAL: 'BOG Terminal', TBC_TERMINAL: 'TBC Terminal' };
                 document.getElementById('pn-car').textContent    = e.car_number ?? '—';
                 document.getElementById('pn-wash').textContent   = e.wash_type ?? '—';
                 document.getElementById('pn-method').textContent = methodLabels[e.payment_method] ?? e.payment_method;
                 document.getElementById('pn-amount').textContent = '₾' + Number(e.wash_price).toFixed(2);
+                document.getElementById('payment-notification').classList.remove('hidden');
+            });
+
+        window.Echo.channel('parkings')
+            .listen('ParkingCreated', function (e) {
+                window.dispatchEvent(new CustomEvent('parking-created', { detail: e }));
+            })
+            .listen('ParkingPaid', function (e) {
+                window.dispatchEvent(new CustomEvent('parking-paid', { detail: e }));
+
+                document.getElementById('pn-car').textContent    = e.car_number ?? '—';
+                document.getElementById('pn-wash').textContent   = 'პარკინგი';
+                document.getElementById('pn-method').textContent = methodLabels[e.payment_method] ?? e.payment_method;
+                document.getElementById('pn-amount').textContent = '₾' + Number(e.parking_fee).toFixed(2);
                 document.getElementById('payment-notification').classList.remove('hidden');
             });
     });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\WashQueuePaid;
 use App\Models\CarwashBox;
+use App\Models\Parking;
 use App\Models\Payment;
 use App\Models\User;
 use App\Models\WashQueue;
@@ -21,7 +22,13 @@ class PaymentController extends Controller
             ->latest()
             ->get();
 
-        return view('pages.cashier', compact('queues'));
+        $parkings = Parking::where(function ($q) {
+            $q->whereDate('created_at', today())->orWhere('is_paid', false);
+        })
+            ->latest()
+            ->get();
+
+        return view('pages.cashier', compact('queues', 'parkings'));
     }
 
     public function paymentHistory(Request $request)

@@ -26,8 +26,45 @@
         {{--            Main
             </p>--}}
 
+        @if(auth('web')->user()?->hasRole('manager') || auth('web')->user()?->hasRole('admin'))
+            @php $dashActive = request()->routeIs('queue_dashboard'); @endphp
+            <a href="{{ route('queue_dashboard') }}"
+                @class([
+                    'nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors',
+                    'bg-[var(--color-brand-500)] text-white' => $dashActive,
+                    'text-[var(--color-text-light)] dark:text-[var(--color-text-dark)] hover:bg-[var(--color-brand-50)] dark:hover:bg-[var(--color-brand-900)]/30' => !$dashActive,
+                ])>
+                <svg
+                    @class(['nav-icon w-5 h-5 shrink-0', 'text-white' => $dashActive, 'text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]' => !$dashActive])
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M3 12l9-9 9 9M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9"/>
+                </svg>
+                <span class="nav-label">მთავარი</span>
+            </a>
 
-        @if( (auth('web')->check() && auth('web')->user()->hasRole('admin')) || auth('admin')->check() )
+
+
+            @php $washerActive = request()->routeIs('washer_dashboard', 'washer.single'); @endphp
+            <a href="{{ route('washer_dashboard') }}"
+                @class([
+                    'nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors',
+                    'bg-[var(--color-brand-500)] text-white' => $washerActive,
+                    'text-[var(--color-text-light)] dark:text-[var(--color-text-dark)] hover:bg-[var(--color-brand-50)] dark:hover:bg-[var(--color-brand-900)]/30' => !$washerActive,
+                ])>
+                <svg
+                    @class(['nav-icon w-5 h-5 shrink-0', 'text-white' => $washerActive, 'text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]' => !$washerActive])
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m9-4a4 4 0 11-8 0 4 4 0 018 0z"/>
+                </svg>
+                <span class="nav-label">მრეცხავები</span>
+            </a>
+
+        @endif
+
+
+    @if( (auth('web')->check() && auth('web')->user()->hasRole('admin')) || auth('admin')->check() )
             @php $historyActive = request()->routeIs('washes_history'); @endphp
             <a href="{{ route('washes_history') }}"
                 @class([
@@ -106,42 +143,6 @@
 
         @endif
 
-        @if(auth('web')->user()?->hasRole('manager') || auth('web')->user()?->hasRole('admin'))
-            @php $dashActive = request()->routeIs('queue_dashboard'); @endphp
-            <a href="{{ route('queue_dashboard') }}"
-                @class([
-                    'nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors',
-                    'bg-[var(--color-brand-500)] text-white' => $dashActive,
-                    'text-[var(--color-text-light)] dark:text-[var(--color-text-dark)] hover:bg-[var(--color-brand-50)] dark:hover:bg-[var(--color-brand-900)]/30' => !$dashActive,
-                ])>
-                <svg
-                    @class(['nav-icon w-5 h-5 shrink-0', 'text-white' => $dashActive, 'text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]' => !$dashActive])
-                    fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                          d="M3 12l9-9 9 9M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9"/>
-                </svg>
-                <span class="nav-label">მთავარი</span>
-            </a>
-
-
-
-            @php $washerActive = request()->routeIs('washer_dashboard', 'washer.single'); @endphp
-            <a href="{{ route('washer_dashboard') }}"
-                @class([
-                    'nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors',
-                    'bg-[var(--color-brand-500)] text-white' => $washerActive,
-                    'text-[var(--color-text-light)] dark:text-[var(--color-text-dark)] hover:bg-[var(--color-brand-50)] dark:hover:bg-[var(--color-brand-900)]/30' => !$washerActive,
-                ])>
-                <svg
-                    @class(['nav-icon w-5 h-5 shrink-0', 'text-white' => $washerActive, 'text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]' => !$washerActive])
-                    fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                          d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m9-4a4 4 0 11-8 0 4 4 0 018 0z"/>
-                </svg>
-                <span class="nav-label">მრეცხავები</span>
-            </a>
-
-        @endif
 
 
         @php $washerActive = request()->routeIs('payment_dashboard'); @endphp
@@ -156,6 +157,7 @@
         </a>
 
 
+        @if( (auth('web')->check() && auth('web')->user()->hasRole('admin')) || (auth('web')->check() && auth('web')->user()->hasRole('manager'))  || auth('admin')->check() )
         @php $parkingsActive = request()->routeIs('parkings.*'); @endphp
         <a href="{{ route('parkings.index') }}"
             @class([
@@ -189,6 +191,22 @@
             <span class="nav-label">კონტრაქტორები</span>
         </a>
 
+        @php $productsActive = request()->routeIs('products.*'); @endphp
+        <a href="{{ route('products.index') }}"
+            @class([
+                'nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors',
+                'bg-[var(--color-brand-500)] text-white' => $productsActive,
+                'text-[var(--color-text-light)] dark:text-[var(--color-text-dark)] hover:bg-[var(--color-brand-50)] dark:hover:bg-[var(--color-brand-900)]/30' => !$productsActive,
+            ])>
+            <svg
+                @class(['nav-icon w-5 h-5 shrink-0', 'text-white' => $productsActive, 'text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]' => !$productsActive])
+                fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10"/>
+            </svg>
+            <span class="nav-label">პროდუქტები</span>
+        </a>
+@endif
     </nav>
 
     {{-- Collapse toggle — desktop only --}}

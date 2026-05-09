@@ -328,10 +328,10 @@
                                 </div>
 
                                 <div
-                                    class="flex items-center justify-between pt-2 mt-1 border-t border-rose-200 dark:border-rose-800">
+                                    class="flex items-center justify-between flex-wrap pt-2 mt-1 border-t border-rose-200 dark:border-rose-800">
                                     <span
                                         class="text-xs font-bold text-rose-700 dark:text-rose-300">₾{{ number_format($activeQueue->wash_price, 2) }}</span>
-                                    <div class="flex items-center gap-1.5">
+                                    <div class="flex items-center flex-wrap gap-1.5 mt-2">
                                     <span class="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full
                                                  bg-rose-100 dark:bg-rose-900/50 text-rose-600 dark:text-rose-400">
                                         {{ str_replace('_', ' ', $activeQueue->status) }}

@@ -186,7 +186,10 @@
                         </button>
                         <span id="photo-name" class="text-xs text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)] hidden"></span>
                     </div>
-                    <img id="photo-preview" src="" alt="preview" class="hidden mt-3 rounded-xl max-h-48 object-cover border border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]">
+                    <a href="#" target="_blank" id="photo-link" class="hidden mt-3">
+                        <img id="photo-preview" src="" alt="preview"
+                             class="rounded-xl h-36 w-52 object-cover border border-[var(--color-border-light)] dark:border-[var(--color-border-dark)] cursor-pointer hover:opacity-80 transition-opacity">
+                    </a>
                 </div>
 
                 {{-- Actions --}}
@@ -215,6 +218,7 @@
     (function () {
         const photoInput   = document.getElementById('car-photo-input');
         const photoPreview = document.getElementById('photo-preview');
+        const photoLink    = document.getElementById('photo-link');
         const photoName    = document.getElementById('photo-name');
 
         photoInput.addEventListener('change', function () {
@@ -225,7 +229,8 @@
             const reader = new FileReader();
             reader.onload = (e) => {
                 photoPreview.src = e.target.result;
-                photoPreview.classList.remove('hidden');
+                photoLink.href = e.target.result;
+                photoLink.classList.remove('hidden');
             };
             reader.readAsDataURL(file);
         });

@@ -6,6 +6,7 @@ use App\Http\Controllers\ContractorController;
 use App\Http\Controllers\ParkingController;
 use App\Http\Controllers\ParkingFeeController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WasherController;
@@ -67,12 +68,21 @@ Route::group(['middleware' => ['auth', 'tenant_required']], function () {
         Route::post('/parkings/{parking}/update', 'update')->name('parkings.update');
         Route::post('/parkings/{parking}/exit', 'markExit')->name('parkings.exit');
         Route::post('/parkings/{parking}/delete', 'destroy')->name('parkings.destroy');
+        Route::post('/parkings/{parking}/payment', 'pay')->name('parkings.payment');
     });
 
     Route::controller(ParkingFeeController::class)->group(function () {
         Route::post('/parking-fees', 'store')->name('parking-fees.store');
         Route::post('/parking-fees/{parkingFee}/update', 'update')->name('parking-fees.update');
         Route::post('/parking-fees/{parkingFee}/delete', 'destroy')->name('parking-fees.destroy');
+    });
+
+    Route::controller(ProductsController::class)->group(function () {
+        Route::get('/products', 'index')->name('products.index');
+        Route::post('/products', 'store')->name('products.store');
+        Route::post('/products/{product}/update', 'update')->name('products.update');
+        Route::post('/products/{product}/delete', 'destroy')->name('products.destroy');
+        Route::post('/products/{product}/payment', 'pay')->name('products.payment');
     });
 
     Route::controller(ContractorController::class)->group(function () {

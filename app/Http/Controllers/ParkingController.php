@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ParkingCreated;
+use App\Events\ParkingPaid;
 use App\Models\Parking;
 use App\Models\ParkingFee;
 use App\Models\User;
@@ -30,12 +32,14 @@ class ParkingController extends Controller
             'start_time' => ['required', 'date_format:H:i'],
         ]);
 
-        Parking::create([
+        $parking = Parking::create([
             'car_number' => $data['car_number'],
             'start_time' => $data['start_date'].' '.$data['start_time'],
             'user_id' => auth()->user()->id,
             'tenant_id' => auth()->user()->tenant_id,
         ]);
+
+        ParkingCreated::dispatch($parking);
 
         return redirect()->route('parkings.index');
     }
@@ -101,6 +105,24 @@ class ParkingController extends Controller
         $parking->delete();
 
         return redirect()->route('parkings.index');
+    }
+
+    public function pay(Request $request, Parking $parking): RedirectResponse
+    {
+        abort_if(is_null($parking->end_time), 403, 'Car has not exited parking yet.');
+
+        $data = $request->validate([
+            'payment_method' => ['required', 'in:cash,BOG_TERMINAL,TBC_TERMINAL'],
+        ]);
+
+        $parking->update([
+            'is_paid' => true,
+            'payment_method' => $data['payment_method'],
+        ]);
+
+        ParkingPaid::dispatch($parking, $data['payment_method']);
+
+        return redirect()->back();
     }
 
     private function applyTariff(array &$data, mixed $startTime, string $endTime, ParkingFee $tariff): void
