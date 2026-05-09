@@ -6,11 +6,13 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-
     public function up(): void
     {
         Schema::create('wash_queues', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tenant_id')->constrained()->onDelete('cascade');
+            $table->foreignId('contractor_id')->nullable()->constrained('contractors')->cascadeOnDelete();
+            $table->boolean('is_insurance')->default(false);
             $table->foreignId('car_id')->constrained('cars')->cascadeOnDelete();
             $table->foreignId('car_wash_box_id')->nullable()->constrained('carwash_boxes')->cascadeOnDelete();
             $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete();

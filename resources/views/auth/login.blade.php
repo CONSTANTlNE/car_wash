@@ -100,13 +100,22 @@
                     </label>
                 </div>
 
-                {{-- Submit --}}
-                <button type="submit"
-                        class="w-full rounded-xl px-4 py-2.5 text-sm font-semibold text-white
+                <div class="flex justyfy-center gap-2">
+
+                    {{-- Submit --}}
+                    <a href="{{route('register')}}" type="submit"
+                            class="w-full rounded-xl px-4 py-2.5 text-sm font-semibold text-white
                                bg-[var(--color-brand-500)] hover:bg-[var(--color-brand-600)]
                                active:bg-[var(--color-brand-700)] transition-colors">
-                    Sign in
-                </button>
+                        რეგისტრაცია
+                    </a>
+                    <button type="submit"
+                       class="w-full rounded-xl px-4 py-2.5 text-sm font-semibold text-white
+                               bg-[var(--color-brand-500)] hover:bg-[var(--color-brand-600)]
+                               active:bg-[var(--color-brand-700)] transition-colors">
+                        ავტორიზაცია
+                    </button>
+                </div>
             </form>
         </div>
     </div>

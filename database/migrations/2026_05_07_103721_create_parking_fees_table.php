@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->boolean('is_active')->default(true)->after('password');
+        Schema::create('parking_fees', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('tenant_id')->constrained()->onDelete('cascade');
+            $table->integer('free_time')->nullable();
+            $table->float('parking_price');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('parking_fees');
     }
 };

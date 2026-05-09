@@ -34,6 +34,8 @@
         {{-- ── SCROLLABLE CONTENT ── --}}
         <main class="flex-1 overflow-y-auto px-4 md:px-6 py-6 space-y-8">
 
+            @yield('contractors')
+            @yield('parkings')
             @yield('boxes_dashboard')
             @yield('boxes_dashboard2')
             @yield('queue_create')
@@ -43,6 +45,8 @@
             @yield('cashier')
             @yield('washes_history')
             @yield('payment_history')
+            @yield('tenants')
+            @yield('users')
 
         </main>
     </div>

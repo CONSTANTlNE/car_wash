@@ -2,14 +2,19 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\BelongsToTenant;
 use Illuminate\Database\Eloquent\Attributes\Guarded;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 #[Guarded([])]
-class WashQueue extends Model
+class WashQueue extends Model implements HasMedia
 {
+    use BelongsToTenant, InteractsWithMedia;
+
     public function car(): BelongsTo
     {
         return $this->belongsTo(Car::class);

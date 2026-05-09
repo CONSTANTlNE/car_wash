@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('wash_types', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tenant_id')->constrained()->onDelete('cascade');
             $table->string('wash_type');
             $table->boolean('is_active')->default(true);
             $table->timestamps();

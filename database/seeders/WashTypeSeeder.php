@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Tenant;
 use App\Models\WashType;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class WashTypeSeeder extends Seeder
@@ -13,9 +13,11 @@ class WashTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        WashType::create(['wash_type'=>'Total']);
-        WashType::create(['wash_type'=>'Only Inside']);
-        WashType::create(['wash_type'=>'Only Outside']);
-        WashType::create(['wash_type'=>'Dry Clean']);
+        $types = ['Total', 'Only Inside', 'Only Outside', 'Dry Clean'];
+        $tenant = Tenant::first();
+
+        foreach ($types as $type) {
+            WashType::create(['wash_type' => $type, 'tenant_id' => $tenant->id]);
+        }
     }
 }

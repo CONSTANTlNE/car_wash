@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Tenant;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -13,36 +13,40 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $manager=User::create(
+        $tenant = Tenant::first();
+        $manager = User::create(
             [
-                'name'=>'manager',
-                'email'=>'manager@carbidpro.com',
-                'password'=>bcrypt('password'),
+                'name' => 'manager',
+                'email' => 'manager@carbidpro.com',
+                'password' => bcrypt('password'),
+                'tenant_id' => $tenant->id,
             ]
         );
+
         $manager->assignRole('manager');
 
-        $manager=User::create(
+        $cashier = User::create(
             [
-                'name'=>'cashier',
-                'email'=>'cashier@carbidpro.com',
-                'password'=>bcrypt('password'),
+                'name' => 'cashier',
+                'email' => 'cashier@carbidpro.com',
+                'password' => bcrypt('password'),
+                'tenant_id' => $tenant->id,
             ]
         );
-        $manager->assignRole('cashier');
 
+        $cashier->assignRole('cashier');
 
         foreach (range(1, 10) as $i) {
             $user = User::create([
                 'name' => fake()->name(),
                 'email' => "washer{$i}@carbidpro.com",
                 'password' => bcrypt('password'),
-                'commission' => 35
+                'commission' => 35,
+                'tenant_id' => $tenant->id,
             ]);
 
             $user->assignRole('washer');
         }
-
 
     }
 }

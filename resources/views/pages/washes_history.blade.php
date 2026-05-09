@@ -167,6 +167,7 @@
                                 <span class="inline-block px-2 py-0.5 rounded-full text-[11px] font-semibold capitalize {{ $statusColor }}">
                                     {{ str_replace('_', ' ', $queue->status) }}
                                 </span>
+
                             </td>
                             <td class="px-5 py-3">
                                 @if ($queue->is_paid)

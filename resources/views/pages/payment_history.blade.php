@@ -5,18 +5,43 @@
 <section class="pb-6">
 
     {{-- Header --}}
-    <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+    <div class="flex items-center justify-center mb-5">
         <h2 class="text-sm font-semibold uppercase tracking-widest text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]">
-            Payment History
+            გადახდების ისტორია
         </h2>
+    </div>
 
-        <form method="GET" action="{{ route('payment.history') }}" class="flex flex-wrap items-center gap-2">
-            {{-- Car number search --}}
+    {{-- Filters --}}
+    <form method="GET" action="{{ route('payment.history') }}"
+          class="rounded-2xl border border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]
+                 bg-[var(--color-card-light)] dark:bg-[var(--color-card-dark)] p-4 mb-5 space-y-3 ">
+
+        {{-- Row 1: date range + car number + actions --}}
+        <div class="flex flex-wrap justify-center gap-2">
+            <div class="flex items-center gap-1.5">
+                <label class="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]">From</label>
+                <input type="date" name="from" value="{{ $from->toDateString() }}"
+                       class="rounded-xl px-3 py-1.5 text-sm
+                              bg-[var(--color-surface-light)] dark:bg-[var(--color-surface-dark)]
+                              border border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]
+                              text-[var(--color-text-light)] dark:text-[var(--color-text-dark)]
+                              outline-none focus:ring-2 focus:ring-[var(--color-brand-400)] focus:border-transparent">
+            </div>
+            <div class="flex items-center gap-1.5">
+                <label class="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]">To</label>
+                <input type="date" name="to" value="{{ $to->toDateString() }}"
+                       class="rounded-xl px-3 py-1.5 text-sm
+                              bg-[var(--color-surface-light)] dark:bg-[var(--color-surface-dark)]
+                              border border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]
+                              text-[var(--color-text-light)] dark:text-[var(--color-text-dark)]
+                              outline-none focus:ring-2 focus:ring-[var(--color-brand-400)] focus:border-transparent">
+            </div>
+
             <div class="relative">
                 <input type="text" name="car_number" value="{{ $carNumber }}"
                        placeholder="Car number..."
-                       class="rounded-xl pl-8 pr-3 py-1.5 text-sm w-40
-                              bg-[var(--color-card-light)] dark:bg-[var(--color-card-dark)]
+                       class="rounded-xl pl-8 pr-3 py-1.5 text-sm w-36
+                              bg-[var(--color-surface-light)] dark:bg-[var(--color-surface-dark)]
                               border border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]
                               text-[var(--color-text-light)] dark:text-[var(--color-text-dark)]
                               placeholder:text-[var(--color-muted-light)] dark:placeholder:text-[var(--color-muted-dark)]
@@ -27,60 +52,116 @@
                 </svg>
             </div>
 
-            {{-- Date range --}}
-            <div class="flex items-center gap-1.5">
-                <label class="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]">From</label>
-                <input type="date" name="from" value="{{ $from->toDateString() }}"
-                       onchange="this.form.submit()"
-                       class="rounded-xl px-3 py-1.5 text-sm
-                              bg-[var(--color-card-light)] dark:bg-[var(--color-card-dark)]
-                              border border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]
-                              text-[var(--color-text-light)] dark:text-[var(--color-text-dark)]
-                              outline-none focus:ring-2 focus:ring-[var(--color-brand-400)] focus:border-transparent">
-            </div>
-            <div class="flex items-center gap-1.5">
-                <label class="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]">To</label>
-                <input type="date" name="to" value="{{ $to->toDateString() }}"
-                       onchange="this.form.submit()"
-                       class="rounded-xl px-3 py-1.5 text-sm
-                              bg-[var(--color-card-light)] dark:bg-[var(--color-card-dark)]
-                              border border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]
-                              text-[var(--color-text-light)] dark:text-[var(--color-text-dark)]
-                              outline-none focus:ring-2 focus:ring-[var(--color-brand-400)] focus:border-transparent">
-            </div>
-
             <button type="submit"
                     class="px-3 py-1.5 rounded-xl text-xs font-semibold text-white
                            bg-[var(--color-brand-500)] hover:bg-[var(--color-brand-600)] transition-colors">
-                Search
+                ძებნა
             </button>
 
-            @if ($carNumber)
+            @if($carNumber || $paymentMethod || $washerId || $washTypeId || $boxId)
                 <a href="{{ route('payment.history', ['from' => $from->toDateString(), 'to' => $to->toDateString()]) }}"
                    class="px-3 py-1.5 rounded-xl text-xs font-semibold
                           border border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]
                           text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]
                           hover:bg-[var(--color-border-light)] dark:hover:bg-[var(--color-border-dark)] transition-colors">
-                    Clear
+                    გასუფთავება
                 </a>
             @endif
-        </form>
-    </div>
+        </div>
+
+        {{-- Row 2: dropdown filters --}}
+        <div class="flex flex-wrap justify-center gap-2">
+            {{-- Payment method --}}
+            <select name="payment_method" onchange="this.form.submit()"
+                    class="rounded-xl px-3 py-1.5 text-sm
+                           bg-[var(--color-surface-light)] dark:bg-[var(--color-surface-dark)]
+                           border border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]
+                           text-[var(--color-text-light)] dark:text-[var(--color-text-dark)]
+                           outline-none focus:ring-2 focus:ring-[var(--color-brand-400)] focus:border-transparent">
+                <option value="">ყველა მეთოდი</option>
+                <option value="cash" @selected($paymentMethod === 'cash')>Cash</option>
+                <option value="BOG_TERMINAL" @selected($paymentMethod === 'BOG_TERMINAL')>BOG Terminal</option>
+                <option value="TBC_TERMINAL" @selected($paymentMethod === 'TBC_TERMINAL')>TBC Terminal</option>
+            </select>
+
+            {{-- Washer --}}
+            <select name="washer_id" onchange="this.form.submit()"
+                    class="rounded-xl px-3 py-1.5 text-sm
+                           bg-[var(--color-surface-light)] dark:bg-[var(--color-surface-dark)]
+                           border border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]
+                           text-[var(--color-text-light)] dark:text-[var(--color-text-dark)]
+                           outline-none focus:ring-2 focus:ring-[var(--color-brand-400)] focus:border-transparent">
+                <option value="">ყველა მრეცხავი</option>
+                @foreach($washers as $washer)
+                    <option value="{{ $washer->id }}" @selected($washerId == $washer->id)>{{ $washer->name }}</option>
+                @endforeach
+            </select>
+
+            {{-- Wash type --}}
+            <select name="wash_type_id" onchange="this.form.submit()"
+                    class="rounded-xl px-3 py-1.5 text-sm
+                           bg-[var(--color-surface-light)] dark:bg-[var(--color-surface-dark)]
+                           border border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]
+                           text-[var(--color-text-light)] dark:text-[var(--color-text-dark)]
+                           outline-none focus:ring-2 focus:ring-[var(--color-brand-400)] focus:border-transparent">
+                <option value="">ყველა რეცხვის ტიპი</option>
+                @foreach($washTypes as $wt)
+                    <option value="{{ $wt->id }}" @selected($washTypeId == $wt->id)>{{ $wt->wash_type }}</option>
+                @endforeach
+            </select>
+
+            {{-- Box --}}
+            <select name="box_id" onchange="this.form.submit()"
+                    class="rounded-xl px-3 py-1.5 text-sm
+                           bg-[var(--color-surface-light)] dark:bg-[var(--color-surface-dark)]
+                           border border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]
+                           text-[var(--color-text-light)] dark:text-[var(--color-text-dark)]
+                           outline-none focus:ring-2 focus:ring-[var(--color-brand-400)] focus:border-transparent">
+                <option value="">ყველა ბოქსი</option>
+                @foreach($boxes as $box)
+                    <option value="{{ $box->id }}" @selected($boxId == $box->id)>Box {{ $box->box_number }}</option>
+                @endforeach
+            </select>
+        </div>
+    </form>
 
     {{-- Summary --}}
-    <div class="grid grid-cols-2 gap-4 mb-6">
-        <div class="rounded-2xl border border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]
+    <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
+
+
+    <div class="rounded-2xl border border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]
                     bg-[var(--color-card-light)] dark:bg-[var(--color-card-dark)] p-5">
-            <p class="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)] mb-1">Total Payments</p>
+            <p class="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)] mb-1">სულ</p>
             <p class="text-2xl font-bold text-[var(--color-text-light)] dark:text-[var(--color-text-dark)]">
                 {{ $stats['total'] }}
             </p>
         </div>
         <div class="rounded-2xl border border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]
                     bg-[var(--color-card-light)] dark:bg-[var(--color-card-dark)] p-5">
-            <p class="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)] mb-1">Total Amount</p>
+            <p class="text-xs font-semibold uppercase tracking-wider text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)] mb-1">თანხა</p>
             <p class="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
                 ₾{{ number_format($stats['amount'], 2) }}
+            </p>
+        </div>
+        <div class="rounded-2xl border border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]
+                    bg-[var(--color-card-light)] dark:bg-[var(--color-card-dark)] p-5">
+            <p class="text-xs font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-1">ნაღდი</p>
+            <p class="text-2xl font-bold text-[var(--color-text-light)] dark:text-[var(--color-text-dark)]">
+                ₾{{ number_format($stats['cash'], 2) }}
+            </p>
+        </div>
+        <div class="rounded-2xl border border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]
+                    bg-[var(--color-card-light)] dark:bg-[var(--color-card-dark)] p-5">
+            <p class="text-xs font-semibold uppercase tracking-wider text-sky-600 dark:text-sky-400 mb-1">BOG</p>
+            <p class="text-2xl font-bold text-[var(--color-text-light)] dark:text-[var(--color-text-dark)]">
+                ₾{{ number_format($stats['bog'], 2) }}
+            </p>
+        </div>
+        <div class="rounded-2xl border border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]
+                    bg-[var(--color-card-light)] dark:bg-[var(--color-card-dark)] p-5">
+            <p class="text-xs font-semibold uppercase tracking-wider text-violet-600 dark:text-violet-400 mb-1">TBC</p>
+            <p class="text-2xl font-bold text-[var(--color-text-light)] dark:text-[var(--color-text-dark)]">
+                ₾{{ number_format($stats['tbc'], 2) }}
             </p>
         </div>
     </div>
@@ -95,13 +176,13 @@
                                text-left text-[10px] uppercase tracking-widest
                                text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)]">
                         <th class="px-5 py-3">#</th>
-                        <th class="px-5 py-3">Date & Time</th>
-                        <th class="px-5 py-3">Car</th>
-                        <th class="px-5 py-3">Wash Type</th>
-                        <th class="px-5 py-3">Box</th>
-                        <th class="px-5 py-3">Washer</th>
-                        <th class="px-5 py-3">Method</th>
-                        <th class="px-5 py-3">Amount</th>
+                        <th class="px-5 py-3">თარიღი</th>
+                        <th class="px-5 py-3">მანქანა</th>
+                        <th class="px-5 py-3">რეცხვის ტიპი</th>
+                        <th class="px-5 py-3">ბოქსი</th>
+                        <th class="px-5 py-3">მრეცხავი</th>
+                        <th class="px-5 py-3">მეთოდი</th>
+                        <th class="px-5 py-3">თანხა</th>
                         <th class="px-5 py-3"></th>
                     </tr>
                 </thead>

@@ -18,12 +18,32 @@
         </svg>
     </button>
 
-    {{-- Page title --}}
+    {{-- Tenant switcher --}}
     <div class="flex-1 min-w-0">
-        <h1 class="text-base font-semibold truncate">Overview</h1>
-        <p class="text-xs text-[var(--color-muted-light)] dark:text-[var(--color-muted-dark)] hidden sm:block">
-            Thursday, 24 April 2026
-        </p>
+        @php $tenants = auth()->user()->tenants; @endphp
+        @if($tenants->count() > 1)
+            <form action="{{ route('tenants.switch') }}" method="POST">
+                @csrf
+                <select name="tenant_id" onchange="this.form.submit()"
+                        class="rounded-xl px-3 py-1.5 text-sm
+                               bg-[var(--color-surface-light)] dark:bg-[var(--color-surface-dark)]
+                               border border-[var(--color-border-light)] dark:border-[var(--color-border-dark)]
+                               text-[var(--color-text-light)] dark:text-[var(--color-text-dark)]
+                               outline-none focus:ring-2 focus:ring-[var(--color-brand-400)] focus:border-transparent
+                               max-w-[200px]">
+                    @foreach($tenants as $tenant)
+                        <option value="{{ $tenant->id }}"
+                            {{ auth()->user()->tenant_id == $tenant->id ? 'selected' : '' }}>
+                            {{ $tenant->company_name }}
+                        </option>
+                    @endforeach
+                </select>
+            </form>
+        @elseif($tenants->count() === 1)
+            <span class="text-sm font-medium text-[var(--color-text-light)] dark:text-[var(--color-text-dark)]">
+                {{ $tenants->first()->company_name }}
+            </span>
+        @endif
     </div>
 
     {{-- Search --}}
