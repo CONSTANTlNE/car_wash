@@ -17,9 +17,12 @@ class CreateTenantMiddleware
     {
         $user = auth()->user();
 
-        if ($user->tenants()->count() == 0 && ! $request->routeIs('tenants', 'tenants.*')) {
+        if ($user->hasRole('admin') && $user->tenants()->count() == 0 && ! $request->routeIs('tenants', 'tenants.*')) {
             return redirect()->route('tenants')->with('error', 'Please create a tenant first.');
         }
+
+
+
 
         return $next($request);
     }

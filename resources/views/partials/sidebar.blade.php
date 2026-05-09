@@ -27,7 +27,7 @@
             </p>--}}
 
 
-        @if(auth('web')->user()?->hasRole('admin') || auth('admin'))
+        @if( (auth('web')->check() && auth('web')->user()->hasRole('admin')) || auth('admin')->check() )
             @php $historyActive = request()->routeIs('washes_history'); @endphp
             <a href="{{ route('washes_history') }}"
                 @class([
